@@ -1,15 +1,16 @@
 import * as OTPAuth from 'otpauth';
 
+import timingSafeStringCompare from '@/util/timing-safe-string-compare';
+
 import { b32FromBuf, b32ToBuf } from './util/base32';
 import hmacDigest from './util/hmac-digest';
 import numberToBuf from './util/number-to-buf';
 import pad from './util/pad';
-import timingSafeStringCompare from '@/util/timing-safe-string-compare';
 
 /**
  * Collection of parameters for generating and validating a TOTP.
  */
-type OTPParams = {
+export type OTPParams = {
   issuer: string; // Issuer of the OTP (e.g., the app name)
   label: string; // Label to identify the account associated with the OTP
   algorithm: 'SHA1' | 'SHA256' | 'SHA512'; // Hashing algorithm
@@ -149,7 +150,7 @@ export const generateOwnOTP = (
   const token = pad(otp, digits); // Pad OTP with zeroes if necessary
   const uri = `otpauth://totp/${issuer}:${label}?issuer=${issuer}&secret=${secret}&algorithm=${algorithm}&digits=${digits}&period=${period}`;
 
-  return { token, uri };
+  return { token, uri: encodeURI(uri) };
 };
 
 /**

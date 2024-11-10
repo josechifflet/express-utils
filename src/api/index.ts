@@ -19,7 +19,7 @@ import xRequestedWith from '@/middlewares/x-requested-with';
 import xst from '@/middlewares/xst';
 
 // Interface for configuration options passed to the Api class
-interface ApiOptions {
+export interface ApiOptions {
   handlers: { path: string; handler: RequestHandler }[]; // Array of route handlers
   redis: Redis; // Redis instance for rate limiting
 

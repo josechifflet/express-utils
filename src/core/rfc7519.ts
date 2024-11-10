@@ -4,6 +4,7 @@ import { importPKCS8, importSPKI, jwtVerify, SignJWT } from 'jose';
 import { z } from 'zod';
 
 import { AppError } from '@/error';
+import { asError } from '@/util/catch-unknown';
 
 /**
  * Signs a JWT with HS256 (symmetric algorithm) for session-based authentication.
@@ -109,16 +110,20 @@ export const verifyEdDSAJWT = async (
   audience: string,
   issuer: string,
 ) => {
-  // Import the public key for verification
-  const publicKeyEncoded = await importSPKI(publicKey, 'EdDSA');
+  try {
+    // Import the public key for verification
+    const publicKeyEncoded = await importSPKI(publicKey, 'EdDSA');
 
-  const options: JWTVerifyOptions = {
-    audience,
-    issuer,
-  };
+    const options: JWTVerifyOptions = {
+      audience,
+      issuer,
+    };
 
-  // Verify and decode the token
-  return jwtVerify(token, publicKeyEncoded, options);
+    // Verify and decode the token
+    return jwtVerify(token, publicKeyEncoded, options);
+  } catch (error) {
+    throw new AppError(asError(error).name, 401);
+  }
 };
 
 /**
@@ -149,13 +154,13 @@ export const extractJWTFromAuthHeader = (req: Request): string | undefined => {
 export const validateJWTPayload = (jwtPayload: JWTPayload) => {
   // Define the expected JWT payload schema
   const JWTPayloadSchema = z.object({
-    aud: z.string(), // Audience claim
-    exp: z.number(), // Expiration claim
-    iat: z.number(), // Issued at claim
-    iss: z.string(), // Issuer claim
-    jti: z.string(), // JWT ID claim
-    nbf: z.number(), // Not Before claim
-    sub: z.string(), // Subject claim
+    aud: z.string(),
+    exp: z.number(),
+    iat: z.number(),
+    iss: z.string(),
+    jti: z.string(),
+    nbf: z.number(),
+    sub: z.string(),
   });
 
   // Validate the payload using Zod

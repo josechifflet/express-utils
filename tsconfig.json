@@ -42,8 +42,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["./*"]
-    }
+    },
   },
-  "include": ["src", "extensions.d.ts", "eslint.config.mjs"],
+  "include": ["src", "extensions.d.ts", "eslint.config.mjs", "**/*.test.ts"],
   "exclude": ["node_modules", "dist", "cdk.out", "__tests__", "__tests_setup__"]
 }

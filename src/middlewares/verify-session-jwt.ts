@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { expressjwt } from 'express-jwt';
+
 import { AppError } from '@/error';
 
 /**

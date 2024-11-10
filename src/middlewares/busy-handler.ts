@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import toobusy from 'toobusy-js';
+
 import { AppError } from '@/error';
 
 /**
