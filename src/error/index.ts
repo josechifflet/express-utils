@@ -40,7 +40,7 @@ export class AppError extends Error {
    * Constructor initializes an AppError instance with a message and status code.
    * - Automatically determines the error's `status` based on the status code (4xx for `fail`, 5xx for `error`).
    * - Generates a unique ID for the error to help in logging and tracking issues.
-   * 
+   *
    * @param message - Human-readable message describing the error.
    * @param statusCode - HTTP status code to be sent in the response.
    */
@@ -122,7 +122,7 @@ export const errorHandler = (config: ErrorHandlerConfig) => {
     /**
      * Internal function to send a JSON-formatted error response to the client.
      * - Includes error message, status, and optionally the stack trace in development mode.
-     * 
+     *
      * @param error - An AppError instance containing error details for the response.
      */
     const sendErrorResponse = (error: AppError) => {

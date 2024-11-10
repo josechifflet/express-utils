@@ -4,10 +4,10 @@ import { RedisStore } from 'rate-limit-redis';
 
 /**
  * Configures and creates an instance of `express-slow-down` with Redis as the storage backend.
- * 
+ *
  * This middleware helps mitigate spamming and rapid consecutive requests by progressively slowing
  * down responses once a certain threshold of requests is reached. Using Redis as the storage layer
- * allows this middleware to function across distributed instances of the application, supporting 
+ * allows this middleware to function across distributed instances of the application, supporting
  * scalability and preventing abuse in high-demand environments.
  *
  * The rate-limiting strategy:
@@ -23,8 +23,8 @@ const slowDown = (redis: Redis, delayAfter: number) => {
   return expressSlowDown({
     /**
      * RedisStore setup for storing request counts and slow-down limits:
-     * 
-     * The RedisStore configuration provides a `prefix` for all keys used in rate limiting. 
+     *
+     * The RedisStore configuration provides a `prefix` for all keys used in rate limiting.
      * - `prefix`: The key prefix (`sd-common:`) tags all keys associated with this middleware instance,
      *   making it easy to identify them in Redis and allowing separate keys for different middleware uses.
      * - `sendCommand`: Overrides Redis commands with `ioredis`. Known TypeScript compatibility issue
@@ -36,22 +36,22 @@ const slowDown = (redis: Redis, delayAfter: number) => {
       sendCommand: (...args: string[]) => redis.call(...args),
     }),
 
-    // `delayAfter` specifies the number of requests allowed within the time window (`windowMs`) 
+    // `delayAfter` specifies the number of requests allowed within the time window (`windowMs`)
     // before throttling applies. Once this limit is exceeded, the server introduces a delay on responses.
     delayAfter,
 
-    // `windowMs` defines the time window, in milliseconds, for tracking requests. Here, it’s set to 
+    // `windowMs` defines the time window, in milliseconds, for tracking requests. Here, it’s set to
     // 15 minutes (15 * 60 * 1000 milliseconds), so that requests are counted within each 15-minute window.
     windowMs: 15 * 60 * 1000,
 
     /**
      * `delayMs`: Calculates the delay applied to each request after the `delayAfter` limit is reached.
-     * 
+     *
      * This function dynamically computes the delay based on the number of requests beyond the allowed limit,
      * incrementally increasing the delay as more requests are made:
      * - `used`: Total number of requests made within the `windowMs` period.
      * - `req.slowDown.limit`: Retrieves the configured limit (i.e., `delayAfter`) for comparison.
-     * 
+     *
      * Formula:
      * - Calculates delay as `(used - delayAfter) * 200`, applying a 200ms delay per extra request
      *   over the threshold, resulting in increasingly delayed responses to excessive requests.

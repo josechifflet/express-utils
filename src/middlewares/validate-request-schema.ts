@@ -3,10 +3,10 @@ import { AnyZodObject } from 'zod';
 
 /**
  * Middleware for validating request data (body, query, params) using a specified Zod schema.
- * 
- * This middleware validates incoming request data against a provided Zod schema, which can define 
- * expected shapes, types, and constraints for `body`, `query`, and `params` properties. If the data 
- * does not match the schema, Zod will throw an error, automatically stopping the request. This helps 
+ *
+ * This middleware validates incoming request data against a provided Zod schema, which can define
+ * expected shapes, types, and constraints for `body`, `query`, and `params` properties. If the data
+ * does not match the schema, Zod will throw an error, automatically stopping the request. This helps
  * ensure that only valid data reaches the route handler, improving security and reducing errors.
  *
  * @param validationSchema - A Zod schema object used to validate the request data.

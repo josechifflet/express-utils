@@ -1,6 +1,6 @@
 {
   "name": "express-utils",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "npm package that contains utilities for express.js",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

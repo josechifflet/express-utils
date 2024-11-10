@@ -1,10 +1,10 @@
 /**
  * Generates a Basic Authorization header string as defined by RFC 7617.
- * 
+ *
  * Basic Authorization is a simple HTTP authentication scheme that transmits credentials
  * in a "username:password" format, encoded in Base64. The resulting string is used in HTTP
  * headers to provide a client’s identity and password to a server. This function creates the
- * Basic Authorization header string, though this logic will typically be performed on the 
+ * Basic Authorization header string, though this logic will typically be performed on the
  * client-side (frontend) to prevent sensitive information exposure.
  *
  * {@link https://datatracker.ietf.org/doc/html/rfc7617} for detailed RFC specifications.
@@ -30,11 +30,11 @@ export const createBasicAuth = (username: string, password: string) => {
 
 /**
  * Parses and decodes a Basic Authorization header string based on RFC 7617.
- * 
+ *
  * This function takes a Basic Authorization string (usually from an HTTP request header)
  * and decodes it to extract the original username and password. The format expected is:
  * "Basic <Base64-encoded credentials>". After decoding, the function returns an object
- * containing the username and password in plaintext. Note that in Basic Auth, only the 
+ * containing the username and password in plaintext. Note that in Basic Auth, only the
  * password may contain colons (":"), while the username cannot.
  *
  * {@link https://datatracker.ietf.org/doc/html/rfc7617} for RFC details.

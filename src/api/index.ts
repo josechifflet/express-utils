@@ -62,7 +62,7 @@ export class Api {
 
     // Log requests with Morgan in the specified format
     this.app.use(morgan(this.morganFormat));
-    
+
     // Use Helmet for security headers with customized options
     this.app.use(
       helmet({ frameguard: { action: 'deny' }, hidePoweredBy: false }),

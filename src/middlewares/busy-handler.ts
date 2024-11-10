@@ -4,13 +4,13 @@ import { AppError } from '@/error';
 
 /**
  * Middleware to manage server load by checking if the server is too busy to handle additional requests.
- * 
- * This middleware uses the `toobusy-js` library to monitor the server’s event loop lag, a measure 
- * of how overwhelmed the server is. If the lag exceeds a specified threshold, the middleware will 
- * respond with a 503 Service Unavailable error, signaling that the server is temporarily unable to 
+ *
+ * This middleware uses the `toobusy-js` library to monitor the server’s event loop lag, a measure
+ * of how overwhelmed the server is. If the lag exceeds a specified threshold, the middleware will
+ * respond with a 503 Service Unavailable error, signaling that the server is temporarily unable to
  * handle requests due to high load.
- * 
- * This approach helps protect the server from overloading and ensures that users experience 
+ *
+ * This approach helps protect the server from overloading and ensures that users experience
  * minimal downtime by deferring requests during peak load times.
  *
  * @returns A middleware function that checks server load and sends a 503 response if the server is too busy.
@@ -23,7 +23,7 @@ const busyHandler = () => (_: Request, __: Response, next: NextFunction) => {
   toobusy.maxLag(200);
 
   // Configure the interval at which the server checks for event loop lag.
-  // - By setting this interval to 750 milliseconds, the server will evaluate its load at 
+  // - By setting this interval to 750 milliseconds, the server will evaluate its load at
   //   slightly less than once per second, balancing performance with load monitoring frequency.
   toobusy.interval(750);
 

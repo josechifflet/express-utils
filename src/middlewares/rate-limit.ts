@@ -6,7 +6,7 @@ import { AppError } from '@/error';
 
 /**
  * Configures a rate limiter middleware for Express routes to control the number of incoming requests.
- * 
+ *
  * Rate limiting is essential for protecting endpoints from excessive requests, preventing spam and abuse,
  * and ensuring fair usage of server resources. This function integrates `express-rate-limit` with a Redis-based
  * storage layer to manage request counts across distributed environments, making it ideal for large-scale applications.
@@ -44,9 +44,9 @@ const rateLimit = (
   // Configure and return the `express-rate-limit` middleware instance with Redis-based storage.
   return rateLimiter({
     store, // Use RedisStore to persist request counts in Redis for distributed rate limiting.
-    
+
     max, // Defines the maximum number of allowed requests within the `windowMs` time frame.
-    
+
     // `windowMs` defines the time window for the rate limiter in milliseconds.
     // It converts the `minutes` parameter from minutes to milliseconds (minutes * 60 seconds * 1000 ms).
     windowMs: minutes * 60 * 1000,
@@ -60,10 +60,10 @@ const rateLimit = (
 
     /**
      * Custom handler for rate-limited responses.
-     * 
+     *
      * This handler intercepts requests that exceed the rate limit and responds with a `429 Too Many Requests`
      * error. Using the `AppError` class, it provides a structured error message indicating the retry time.
-     * 
+     *
      * @param _ - The Express request object, unused in this handler.
      * @param __ - The Express response object, also unused here.
      * @param next - Express `next` function to pass the error to the centralized error-handling middleware.

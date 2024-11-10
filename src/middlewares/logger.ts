@@ -13,8 +13,8 @@ const __dirname = path.dirname(__filename);
 /**
  * Configuration options for setting up loggers with `express-winston` and `winston`.
  *
- * This function creates a `LoggerOptions` object tailored for logging both successful and error responses 
- * in an Express.js application. Logs are saved in JSON format with additional request metadata, allowing 
+ * This function creates a `LoggerOptions` object tailored for logging both successful and error responses
+ * in an Express.js application. Logs are saved in JSON format with additional request metadata, allowing
  * for structured analysis and troubleshooting.
  *
  * @param filename - The name of the file where logs will be saved, ensuring separate logs for different purposes (e.g., traffic and errors).
@@ -83,18 +83,18 @@ const options = (filename: string): LoggerOptions => ({
 
 /**
  * Middleware for logging successful HTTP requests.
- * 
- * Uses `express-winston` to create a structured log entry for each request that results in a 
- * non-error response. Logs are saved in a traffic-specific file (`traffic.log`), aiding in the 
+ *
+ * Uses `express-winston` to create a structured log entry for each request that results in a
+ * non-error response. Logs are saved in a traffic-specific file (`traffic.log`), aiding in the
  * analysis of normal application behavior and user interactions.
  */
 export const successLogger = expressWinston.logger(options('traffic.log'));
 
 /**
  * Middleware for logging error responses.
- * 
- * This middleware captures requests that result in errors, creating a structured log entry 
- * in an error-specific file (`errors.log`). By separating error logs, this allows for focused 
+ *
+ * This middleware captures requests that result in errors, creating a structured log entry
+ * in an error-specific file (`errors.log`). By separating error logs, this allows for focused
  * troubleshooting and monitoring of issues without cluttering general traffic logs.
  */
 export const errorLogger = expressWinston.errorLogger(options('errors.log'));

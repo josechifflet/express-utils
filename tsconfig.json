@@ -9,7 +9,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["ESNext"],
-    "outDir": "dist",
+    "outDir": "lib",
     "removeComments": true,
     "isolatedModules": true,
 

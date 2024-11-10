@@ -3,11 +3,11 @@ import { AppError } from '@/error';
 
 /**
  * Middleware to prevent Cross-Site Tracing (XST) by restricting HTTP methods to a safe, predefined set.
- * 
+ *
  * Cross-Site Tracing (XST) is an attack technique where HTTP TRACE requests can be exploited to access
- * potentially sensitive information in headers or request bodies. By disallowing unsupported methods such as TRACE, 
+ * potentially sensitive information in headers or request bodies. By disallowing unsupported methods such as TRACE,
  * this middleware mitigates XST risks and ensures that only explicitly allowed HTTP methods are processed by the API.
- * 
+ *
  * Allowed HTTP methods are limited to common request types used in REST APIs:
  * - OPTIONS: For CORS preflight requests.
  * - HEAD: Retrieves headers without the body.
@@ -22,13 +22,13 @@ const xst = () => (req: Request, _: Response, next: NextFunction) => {
   // - Only these methods are permitted for API routes, reducing the attack surface.
   const allowedMethods = [
     'OPTIONS', // For CORS and preflight requests.
-    'HEAD',    // Retrieves metadata without a response body.
+    'HEAD', // Retrieves metadata without a response body.
     'CONNECT', // For creating a network tunnel, generally for HTTPS.
-    'GET',     // Standard retrieval of resources.
-    'POST',    // Creates a new resource.
-    'PATCH',   // Applies partial updates to a resource.
-    'PUT',     // Replaces a resource.
-    'DELETE',  // Deletes a resource.
+    'GET', // Standard retrieval of resources.
+    'POST', // Creates a new resource.
+    'PATCH', // Applies partial updates to a resource.
+    'PUT', // Replaces a resource.
+    'DELETE', // Deletes a resource.
   ];
 
   // Check if the incoming request method is included in the allowedMethods array.

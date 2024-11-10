@@ -3,23 +3,23 @@ import { AppError } from '@/error';
 
 /**
  * Middleware to enforce the presence of the `X-Requested-With` header to mitigate Cross-Site Request Forgery (CSRF).
- * 
+ *
  * The `X-Requested-With` header is commonly used as a security measure to verify that requests originate from
- * an authorized client, typically by requiring AJAX requests from the same origin. By ensuring this header is 
+ * an authorized client, typically by requiring AJAX requests from the same origin. By ensuring this header is
  * present, we reduce the risk of CSRF attacks, as cross-site requests (e.g., from malicious sites) usually lack
  * this header, particularly when targeting APIs from a browser context.
- * 
- * This middleware assumes that requests lacking `X-Requested-With` are likely forged, so it denies such requests 
+ *
+ * This middleware assumes that requests lacking `X-Requested-With` are likely forged, so it denies such requests
  * with a `403 Forbidden` error, effectively blocking unauthorized access attempts.
- * 
+ *
  * References for additional reading:
- * - Stack Overflow discussion on `X-Requested-With` header usage: 
+ * - Stack Overflow discussion on `X-Requested-With` header usage:
  *   {@link https://stackoverflow.com/questions/17478731/whats-the-point-of-the-x-requested-with-header}
  * - CSRF mitigation strategy overview:
  *   {@link https://markitzeroday.com/x-requested-with/cors/2017/06/29/csrf-mitigation-for-ajax-requests.html}
  * - OWASP CSRF Prevention Cheat Sheet:
  *   {@link https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#use-of-custom-request-headers}
- * 
+ *
  * @returns Middleware function that verifies the presence of `X-Requested-With` header in the request.
  */
 const xRequestedWith =

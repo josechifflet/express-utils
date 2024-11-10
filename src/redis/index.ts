@@ -2,9 +2,9 @@ import IORedis, { Redis as RedisClientType } from 'ioredis';
 
 /**
  * Redis class for managing and providing a Redis client instance with lazy initialization.
- * 
- * This class allows for secure connection to a Redis database using provided host, port, 
- * and password credentials. The Redis client is only instantiated when `getClient` is called, 
+ *
+ * This class allows for secure connection to a Redis database using provided host, port,
+ * and password credentials. The Redis client is only instantiated when `getClient` is called,
  * following a lazy initialization pattern to optimize resource usage.
  */
 export class Redis {
@@ -18,7 +18,7 @@ export class Redis {
 
   /**
    * Constructs the Redis class with the required connection parameters.
-   * 
+   *
    * @param redisHost - Redis server host address.
    * @param redisPassword - Password for authenticating with the Redis server.
    * @param redisPort - Port number for connecting to the Redis server.
@@ -31,11 +31,11 @@ export class Redis {
 
   /**
    * Returns the Redis client instance, creating it if it does not already exist.
-   * 
+   *
    * The client is instantiated with the host, password, and port configuration on the first
    * call, following lazy initialization. This avoids creating an unnecessary connection
    * if Redis is not used immediately, optimizing resource management.
-   * 
+   *
    * @returns The Redis client instance for executing Redis commands.
    */
   public getClient(): RedisClientType {

@@ -10,12 +10,12 @@ import timingSafeStringCompare from '@/util/timing-safe-string-compare';
  * Collection of parameters for generating and validating a TOTP.
  */
 type OTPParams = {
-  issuer: string;       // Issuer of the OTP (e.g., the app name)
-  label: string;        // Label to identify the account associated with the OTP
-  algorithm: 'SHA1' | 'SHA256' | 'SHA512';  // Hashing algorithm
-  digits: number;       // Number of digits in the OTP
-  period: number;       // Time period (in seconds) before the OTP changes
-  secret: string;       // Shared secret key in base32 format
+  issuer: string; // Issuer of the OTP (e.g., the app name)
+  label: string; // Label to identify the account associated with the OTP
+  algorithm: 'SHA1' | 'SHA256' | 'SHA512'; // Hashing algorithm
+  digits: number; // Number of digits in the OTP
+  period: number; // Time period (in seconds) before the OTP changes
+  secret: string; // Shared secret key in base32 format
 };
 
 /**
@@ -35,9 +35,9 @@ export const generateDefaultTOTP = (
   const totp = new OTPAuth.TOTP({
     issuer,
     label,
-    algorithm: 'SHA1',  // Default algorithm
-    digits: 6,          // Standard 6-digit OTP
-    period: 30,         // 30-second time window
+    algorithm: 'SHA1', // Default algorithm
+    digits: 6, // Standard 6-digit OTP
+    period: 30, // 30-second time window
     secret: otpSecret,
   });
 

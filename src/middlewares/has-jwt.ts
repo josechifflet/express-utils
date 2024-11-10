@@ -7,14 +7,14 @@ import extractHeader from '@/util/extract-header';
 
 /**
  * Middleware factory for validating JSON Web Tokens (JWT) in requests, ensuring user authorization/authentication.
- * 
+ *
  * This function validates a user's JWT by:
  * 1. Extracting the token from a specified request header.
  * 2. Verifying the token’s signature and claims against expected values (e.g., audience, issuer).
  * 3. Optionally invoking a callback function upon successful token validation, allowing further custom checks.
- * 
- * The `hasJWT` function returns an asynchronous middleware function. It uses a JWT public key for token verification 
- * and expects certain claims (e.g., session ID) to be present in the token. If the token is missing, invalid, 
+ *
+ * The `hasJWT` function returns an asynchronous middleware function. It uses a JWT public key for token verification
+ * and expects certain claims (e.g., session ID) to be present in the token. If the token is missing, invalid,
  * or fails verification, an error is raised. Otherwise, the request is permitted to proceed to the next middleware.
  *
  * @param header - Name of the HTTP header from which to extract the JWT (e.g., "Authorization").

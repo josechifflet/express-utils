@@ -2,7 +2,7 @@ import type { Request } from 'express';
 
 /**
  * Determines if the current connection is secure (HTTPS).
- * 
+ *
  * This function checks if a request was made over a secure HTTPS connection. It verifies the
  * `req.secure` property, which is set by Express if the connection uses HTTPS. Additionally,
  * it checks the `x-forwarded-proto` header, commonly set by reverse proxies (e.g., load balancers)
@@ -19,7 +19,7 @@ const isHTTPS = (request: Request): boolean => {
     return true;
   }
 
-  // Additional check for the `x-forwarded-proto` header, which some proxies set to 'https' 
+  // Additional check for the `x-forwarded-proto` header, which some proxies set to 'https'
   // when forwarding HTTPS requests. This ensures the function can identify HTTPS even behind a proxy.
   if (request.headers['x-forwarded-proto'] === 'https') {
     return true;

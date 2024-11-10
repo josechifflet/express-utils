@@ -4,11 +4,11 @@ import { getClientIp } from 'request-ip';
 
 /**
  * Parses and returns information about the user's device and IP address from the Express request object.
- * 
+ *
  * This function extracts the user agent string from the request headers, utilizes `DeviceDetector`
- * to identify the client application (e.g., browser) and operating system, and retrieves the user's 
+ * to identify the client application (e.g., browser) and operating system, and retrieves the user's
  * IP address. This information is valuable for logging, analytics, and security purposes.
- * 
+ *
  * @param request - Express request object containing client information.
  * @returns An object containing the user's device information and IP address.
  */

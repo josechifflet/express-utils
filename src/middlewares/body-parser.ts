@@ -4,12 +4,12 @@ import { AppError } from '@/error';
 
 /**
  * Custom middleware for parsing JSON request bodies in Express.
- * 
+ *
  * This middleware selectively parses JSON bodies only for requests where it is explicitly applied.
  * - Using this middleware only on specific routes helps optimize the API by avoiding unnecessary
  *   body parsing on endpoints that don't require JSON payloads, saving bandwidth and processing power.
- * 
- * - Additionally, the middleware validates `Content-Type` and `Content-Length` headers to ensure 
+ *
+ * - Additionally, the middleware validates `Content-Type` and `Content-Length` headers to ensure
  *   compatibility with expected JSON payloads, enhancing security and reliability.
  *
  * @param req - Express.js request object containing incoming HTTP request data.
@@ -50,7 +50,7 @@ const bodyParser = (req: Request, res: Response, next: NextFunction) => {
   // Invoke Express’s built-in `json` parser middleware, customized with:
   // - `type`: Set to 'application/json' to reinforce that only JSON payloads are parsed.
   // - `limit`: A hard limit of 512 bytes, ensuring the payload does not exceed the acceptable size.
-  // 
+  //
   // This middleware returns the parsed JSON data, allowing subsequent middleware or route handlers
   // to access the request body as a JavaScript object.
   return parse({ type: 'application/json', limit: 512 })(req, res, next);

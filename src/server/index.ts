@@ -3,7 +3,7 @@ import { Server as HttpServer } from 'http';
 
 /**
  * Interface for configuring the `Server` class with Express application options.
- * 
+ *
  * @property app - The Express application instance to start.
  * @property port - The port number on which the server will listen.
  * @property onInfrastructureCheck - Optional callback function for infrastructure health checks; returns a status record.
@@ -18,7 +18,7 @@ interface ExpressAppStarterOptions {
 
 /**
  * Server class to initialize and manage the Express application with advanced startup and shutdown handling.
- * 
+ *
  * This class:
  * - Starts the Express server on a specified port.
  * - Performs optional infrastructure and extra checks before starting.
@@ -33,7 +33,7 @@ export class Server {
 
   /**
    * Constructs the Server instance with the provided options.
-   * 
+   *
    * @param options - Configuration options for initializing the server.
    */
   constructor(options: ExpressAppStarterOptions) {
@@ -64,7 +64,7 @@ export class Server {
     // Start the server on the specified port and log the startup message.
     const httpServer = this.expressApp.listen(this.listenPort, () => {
       console.log(
-        `API is running on port ${this.listenPort} in ${process.env.NODE_ENV} mode!`
+        `API is running on port ${this.listenPort} in ${process.env.NODE_ENV} mode!`,
       );
     });
 
@@ -73,7 +73,7 @@ export class Server {
 
   /**
    * Sets up handling for uncaught exceptions, which logs the error and exits the application.
-   * 
+   *
    * - Captures exceptions that are not handled elsewhere, ensuring they do not destabilize the server.
    * - Logs the error details and initiates a shutdown to avoid unpredictable behavior.
    */
@@ -87,15 +87,15 @@ export class Server {
 
   /**
    * Sets up graceful shutdown handling for the server on termination signals or unhandled promise rejections.
-   * 
+   *
    * This ensures the server closes all connections and releases resources properly, avoiding abrupt termination.
-   * 
+   *
    * @param httpServer - The HTTP server instance to close gracefully.
    */
   private setupGracefulShutdown(httpServer: HttpServer): void {
     /**
      * Handles shutdown logic, triggered by termination signals or unhandled rejections.
-     * 
+     *
      * @param reason - Reason for shutdown (e.g., signal type or error cause).
      * @param exitCode - Exit code to be used on process termination.
      */
@@ -109,7 +109,9 @@ export class Server {
 
     // Capture unhandled promise rejections, log the error, and initiate shutdown.
     process.on('unhandledRejection', (error: Error) => {
-      console.error('Unhandled promise rejection 💥! Shutting down the application.');
+      console.error(
+        'Unhandled promise rejection 💥! Shutting down the application.',
+      );
       console.error(`Error name: ${error.name}, message: ${error.message}`);
       shutdownHandler('unhandledRejection', 1);
     });

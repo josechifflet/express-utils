@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 
 /**
  * Configuration object for sending standardized JSON API responses.
- * 
+ *
  * @template T - The type of data to include in the response.
  * @property req - The Express request object, not directly used but included for completeness.
  * @property res - The Express response object, used to send the response.
@@ -24,9 +24,9 @@ interface ResponseOptions<T> {
 
 /**
  * Sends a JSON API-compliant response with standardized structure.
- * 
- * This function generates a consistent JSON response format, including status, message, data payload, 
- * and a response type category. The response conforms to JSON API standards, making it useful for 
+ *
+ * This function generates a consistent JSON response format, including status, message, data payload,
+ * and a response type category. The response conforms to JSON API standards, making it useful for
  * structured, predictable API responses.
  *
  * @template T - The type of data to include in the response.
