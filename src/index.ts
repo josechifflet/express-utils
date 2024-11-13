@@ -13,3 +13,6 @@ export * from './core';
 
 // Redis
 export { Redis } from './redis';
+
+// Middlewares
+export * from './middlewares';
