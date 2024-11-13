@@ -1,8 +1,8 @@
 // API
-export { Api } from './api';
+export { Api, type ApiOptions } from './api';
 
 // Server
-export { Server } from './server';
+export { type ExpressAppStarterOptions, Server } from './server';
 
 // Errors
 export type { AppError, ErrorHandlerConfig } from './error';

@@ -9,12 +9,12 @@ import { Server as HttpServer } from 'http';
  * @property onInfrastructureCheck - Optional callback function for infrastructure health checks; returns a status record.
  * @property onExtraChecks - Optional callback function for additional checks to be performed before starting the server.
  */
-interface ExpressAppStarterOptions {
+export type ExpressAppStarterOptions = {
   app: Express;
   port: number;
   onInfrastructureCheck?: () => Promise<Record<string, unknown>>;
   onExtraChecks?: () => Promise<void>;
-}
+};
 
 /**
  * Server class to initialize and manage the Express application with advanced startup and shutdown handling.
