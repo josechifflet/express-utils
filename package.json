@@ -1,6 +1,6 @@
 {
   "name": "@mark01/express-utils",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "npm package that contains utilities for express.js",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
@@ -144,11 +144,5 @@
       "@semantic-release/npm",
       "@semantic-release/github"
     ]
-  },
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
-    }
   }
 }
