@@ -7,7 +7,7 @@ import IORedis, { Redis as RedisClientType } from 'ioredis';
  * and password credentials. The Redis client is only instantiated when `getClient` is called,
  * following a lazy initialization pattern to optimize resource usage.
  */
-export class Redis {
+class Redis {
   // Holds the Redis client instance, created on-demand.
   private clientInstance: RedisClientType;
 
@@ -50,3 +50,5 @@ export class Redis {
     return this.clientInstance;
   }
 }
+
+export default Redis;

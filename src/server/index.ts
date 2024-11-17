@@ -25,7 +25,7 @@ export type ExpressAppStarterOptions = {
  * - Handles uncaught exceptions and unhandled rejections for stability.
  * - Gracefully shuts down on termination signals (e.g., SIGINT, SIGTERM).
  */
-export class Server {
+class Server {
   private readonly expressApp: Express;
   private readonly listenPort: number;
   private readonly infrastructureCheck?: () => Promise<Record<string, unknown>>;
@@ -122,3 +122,5 @@ export class Server {
     process.on('SIGTERM', () => shutdownHandler('SIGTERM', 0));
   }
 }
+
+export default Server;

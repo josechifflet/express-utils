@@ -31,7 +31,7 @@ export interface ApiOptions {
 }
 
 // Main API class responsible for setting up and configuring an Express application
-export class Api {
+class Api {
   private app: Express; // Express instance for handling requests
   private redis: Redis; // Redis instance for rate limiting
 
@@ -115,3 +115,5 @@ export class Api {
     return this.app;
   }
 }
+
+export default Api;
