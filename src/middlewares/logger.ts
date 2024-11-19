@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import winston from 'winston';
 
-import getDeviceID from '@/util/get-device-id';
+import getDeviceID from '../util/get-device-id';
 
 // Obtain the directory and file path for saving logs
 const __filename = fileURLToPath(import.meta.url);

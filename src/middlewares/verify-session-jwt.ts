@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { expressjwt } from 'express-jwt';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Middleware factory for verifying JSON Web Tokens (JWT) in protected routes.

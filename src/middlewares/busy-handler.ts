@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import toobusy from 'toobusy-js';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Middleware to manage server load by checking if the server is too busy to handle additional requests.

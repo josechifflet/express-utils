@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Middleware to prevent Cross-Site Tracing (XST) by restricting HTTP methods to a safe, predefined set.

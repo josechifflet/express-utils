@@ -2,8 +2,7 @@ import type { Request } from 'express';
 import { importPKCS8, importSPKI, JWTPayload, jwtVerify, SignJWT } from 'jose';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { AppError } from '@/error';
-
+import { AppError } from '../error';
 import {
   extractJWTFromAuthHeader,
   signEdDSAJWT,

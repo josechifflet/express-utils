@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Middleware to validate that the client’s `Accept` header specifies a content type

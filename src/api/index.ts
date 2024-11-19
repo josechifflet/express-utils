@@ -8,15 +8,15 @@ import {
   defaultHandleOperationalErrors,
   errorHandler,
   ErrorHandlerConfig,
-} from '@/error';
-import accept from '@/middlewares/accept';
-import busyHandler from '@/middlewares/busy-handler';
-import favicon from '@/middlewares/favicon';
-import { errorLogger, successLogger } from '@/middlewares/logger';
-import notFound from '@/middlewares/not-found';
-import slowDown from '@/middlewares/slow-down';
-import xRequestedWith from '@/middlewares/x-requested-with';
-import xst from '@/middlewares/xst';
+} from '../error';
+import accept from '../middlewares/accept';
+import busyHandler from '../middlewares/busy-handler';
+import favicon from '../middlewares/favicon';
+import { errorLogger, successLogger } from '../middlewares/logger';
+import notFound from '../middlewares/not-found';
+import slowDown from '../middlewares/slow-down';
+import xRequestedWith from '../middlewares/x-requested-with';
+import xst from '../middlewares/xst';
 
 // Interface for configuration options passed to the Api class
 export interface ApiOptions {

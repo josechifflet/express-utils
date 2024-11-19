@@ -3,7 +3,7 @@ import rateLimiter from 'express-rate-limit';
 import Redis from 'ioredis';
 import { RedisStore } from 'rate-limit-redis';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Configures a rate limiter middleware for Express routes to control the number of incoming requests.

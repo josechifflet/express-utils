@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
 import { JWTPayload, JWTVerifyResult } from 'jose';
 
-import { verifyEdDSAJWT } from '@/core/rfc7519';
-import { AppError } from '@/error';
-import extractHeader from '@/util/extract-header';
+import { verifyEdDSAJWT } from '../core/rfc7519';
+import { AppError } from '../error';
+import extractHeader from '../util/extract-header';
 
 /**
  * Middleware factory for validating JSON Web Tokens (JWT) in requests, ensuring user authorization/authentication.

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Middleware to enforce the presence of the `X-Requested-With` header to mitigate Cross-Site Request Forgery (CSRF).

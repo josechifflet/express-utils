@@ -1,7 +1,6 @@
 import * as OTPAuth from 'otpauth';
 
-import timingSafeStringCompare from '@/util/timing-safe-string-compare';
-
+import timingSafeStringCompare from '../util/timing-safe-string-compare';
 import { b32FromBuf, b32ToBuf } from './util/base32';
 import hmacDigest from './util/hmac-digest';
 import numberToBuf from './util/number-to-buf';

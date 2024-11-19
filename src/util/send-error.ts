@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Options object parameters for configuring error responses.

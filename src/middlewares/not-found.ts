@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Middleware to handle `404 Not Found` errors for unmatched routes in the API.

@@ -3,8 +3,8 @@ import type { JWTHeaderParameters, JWTPayload, JWTVerifyOptions } from 'jose';
 import { importPKCS8, importSPKI, jwtVerify, SignJWT } from 'jose';
 import { z } from 'zod';
 
-import { AppError } from '@/error';
-import { asError } from '@/util/catch-unknown';
+import { AppError } from '../error';
+import { asError } from '../util/catch-unknown';
 
 /**
  * Signs a JWT with HS256 (symmetric algorithm) for session-based authentication.

@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { json as parse } from 'express';
 
-import { AppError } from '@/error';
+import { AppError } from '../error';
 
 /**
  * Custom middleware for parsing JSON request bodies in Express.
