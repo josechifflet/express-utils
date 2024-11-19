@@ -57,13 +57,7 @@
     "forceConsistentCasingInFileNames": true,
 
     /* Default */
-    "baseUrl": "./",
-
-    /* Custom Paths */
-    "paths": {
-      "@/*": ["./src/*"],
-      "@@/*": ["./*"]
-    }
+    "baseUrl": "./"
   },
   "include": ["src", "eslint.config.mjs", "**/*.test.ts"]
 }
