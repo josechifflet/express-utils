@@ -1,7 +1,8 @@
 {
   "name": "@mark01/express-utils",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "npm package that contains utilities for express.js",
+  "type": "module",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
   "types": "lib/index.d.ts",
