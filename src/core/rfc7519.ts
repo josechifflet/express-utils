@@ -1,6 +1,6 @@
 import type { Request } from 'express';
 import type { JWTHeaderParameters, JWTPayload, JWTVerifyOptions } from 'jose';
-import { importPKCS8, importSPKI, jwtVerify, SignJWT } from 'jose';
+import { decodeJwt, importPKCS8, importSPKI, jwtVerify, SignJWT } from 'jose';
 import { z } from 'zod';
 
 import { AppError } from '../error';
@@ -170,4 +170,15 @@ export const validateJWTPayload = (jwtPayload: JWTPayload) => {
   }
 
   return validation.data;
+};
+
+/**
+ * Decodes and validates a JWT payload.
+ * @param token - The JWT to decode and validate.
+ * @returns The validated JWT payload object.
+ */
+export const decodeJWTPayload = (token: string) => {
+  const jwtPayload: JWTPayload = decodeJwt(token);
+
+  return validateJWTPayload(jwtPayload);
 };
