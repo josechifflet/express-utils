@@ -19,7 +19,7 @@ interface ResponseOptions<T> {
   statusCode: number;
   data: T;
   message: string;
-  type: 'general' | 'users' | 'attendance' | 'auth' | 'sessions';
+  type: string;
 }
 
 /**
