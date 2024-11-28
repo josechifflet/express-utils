@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { Request, Response } from 'express';
 import { errAsync, okAsync, ResultAsync } from 'neverthrow';
-import { z, ZodError } from 'zod';
+import { z, ZodFormattedError } from 'zod';
 
 import { AppError, formatZodError } from '../error';
 
@@ -14,10 +14,10 @@ export type ResultAsyncRequestSchemas<TParams, TQuery, TBody, TResponse> = {
 };
 
 // Define type for validation errors
-export type ResultAsyncErrorListItem = {
+export interface ResultAsyncErrorListItem<TParams, TQuery, TBody> {
   type: 'Params' | 'Body' | 'Query' | 'Response';
-  errors: ZodError;
-};
+  errors: ZodFormattedError<TParams | TQuery | TBody, string>;
+}
 
 // Define callback type with validated request data
 export type ResultAsyncRequestCallback<TParams, TQuery, TBody, TResponse> = (
@@ -33,7 +33,8 @@ export const resultAsyncController =
     successStatusCode = 200,
   ): RequestHandler =>
   (req, res, next) => {
-    const errors: ResultAsyncErrorListItem[] = [];
+    const requestErrors: ResultAsyncErrorListItem<TParams, TQuery, TBody>[] =
+      [];
     const requestData = {
       params: {} as TParams,
       body: {} as TBody,
@@ -46,7 +47,10 @@ export const resultAsyncController =
       if (parsedParams.success) {
         requestData.params = parsedParams.data;
       } else {
-        errors.push({ type: 'Params', errors: parsedParams.error });
+        requestErrors.push({
+          type: 'Params',
+          errors: parsedParams.error.format(),
+        });
       }
     }
 
@@ -56,7 +60,7 @@ export const resultAsyncController =
       if (parsedBody.success) {
         requestData.body = parsedBody.data;
       } else {
-        errors.push({ type: 'Body', errors: parsedBody.error });
+        requestErrors.push({ type: 'Body', errors: parsedBody.error.format() });
       }
     }
 
@@ -66,13 +70,16 @@ export const resultAsyncController =
       if (parsedQuery.success) {
         requestData.query = parsedQuery.data;
       } else {
-        errors.push({ type: 'Query', errors: parsedQuery.error });
+        requestErrors.push({
+          type: 'Query',
+          errors: parsedQuery.error.format(),
+        });
       }
     }
 
     // If there are validation errors, pass them to the next error handler
-    if (errors.length > 0) {
-      return next(new AppError('Bad request', 400, { errors }));
+    if (requestErrors.length > 0) {
+      return next(new AppError('Bad request', 400, { errors: requestErrors }));
     }
 
     // Run the callback with the validated data
