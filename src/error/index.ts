@@ -36,6 +36,9 @@ export class AppError extends Error {
   // Custom error type to maintain compatibility with `http-errors` package or other similar conventions.
   public type: string;
 
+  // Error extra data to be included in the response.
+  public extra: Record<string, unknown> = {};
+
   /**
    * Constructor initializes an AppError instance with a message and status code.
    * - Automatically determines the error's `status` based on the status code (4xx for `fail`, 5xx for `error`).
@@ -44,7 +47,11 @@ export class AppError extends Error {
    * @param message - Human-readable message describing the error.
    * @param statusCode - HTTP status code to be sent in the response.
    */
-  constructor(message: string, statusCode: number) {
+  constructor(
+    message: string,
+    statusCode: number,
+    extra?: Record<string, unknown>,
+  ) {
     super(message); // Initialize the base Error class with the provided message.
 
     this.id = nanoid(); // Generate a unique identifier for tracking the specific error instance.
@@ -53,7 +60,7 @@ export class AppError extends Error {
     this.statusCode = statusCode;
     this.isOperational = true; // Marks the error as operational (not critical).
     this.type = 'operational.error';
-
+    if (extra) this.extra = extra; // Optionally include extra data in the error response.
     Error.captureStackTrace(this, this.constructor); // Capture the error stack trace for logging.
   }
 }

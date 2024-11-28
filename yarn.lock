@@ -754,6 +754,11 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.25.0.tgz#dfcceebc5ccac7fc2db19471996026258c81b55f"
   integrity sha512-ThcnU0EcMDn+J4B9LD++OgBYxZusuA7iemIIiz5yzEcFg04VZFzdFjuwPdlURmYPZw+fgVrFzj4CA64jSTG4Ig==
 
+"@rollup/rollup-linux-x64-gnu@^4.24.0":
+  version "4.27.4"
+  resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.27.4.tgz#a959eccb04b07fd1591d7ff745a6865faa7042cd"
+  integrity sha512-Ni8mMtfo+o/G7DVtweXXV/Ol2TFf63KYjTtoZ5f078AUgJTmaIJnj4JFU7TK/9SVWTaSJGxPi5zMDgK4w+Ez7Q==
+
 "@rollup/rollup-linux-x64-musl@4.25.0":
   version "4.25.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.25.0.tgz#192f78bad8429711d63a31dc0a7d3312e2df850e"
@@ -4137,6 +4142,13 @@ nerf-dart@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/nerf-dart/-/nerf-dart-1.0.0.tgz#e6dab7febf5ad816ea81cf5c629c5a0ebde72c1a"
   integrity sha512-EZSPZB70jiVsivaBLYDCyntd5eH8NTSMOn3rB+HxwdmKThGELLdYv8qVIMWvZEFy9w8ZZpW9h9OB32l1rGtj7g==
+
+neverthrow@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/neverthrow/-/neverthrow-8.1.1.tgz#dc4ce87236a878e325946034690d342160981a0b"
+  integrity sha512-DpbZ/UDI0B+TxJB1JysXSfi1++3YK2xLBqQLTlRN0b4zxlZ2MoiB+dKKV8dMRzt1fAFjRKDknXOVJgpl+a4Amw==
+  optionalDependencies:
+    "@rollup/rollup-linux-x64-gnu" "^4.24.0"
 
 node-addon-api@^8.1.0:
   version "8.2.2"
