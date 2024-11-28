@@ -26,7 +26,7 @@ export type RequestCallback<TParams, TQuery, TBody, TResponse> = (
   res: Response,
 ) => ResultAsync<TResponse, AppError>;
 
-export const safeTypedRequest =
+export const resultAsyncController =
   <TParams = unknown, TQuery = unknown, TBody = unknown, TResponse = unknown>(
     schemas: RequestSchemas<TParams, TQuery, TBody, TResponse>,
     cb: RequestCallback<TParams, TQuery, TBody, TResponse>,
