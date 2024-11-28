@@ -6,7 +6,7 @@ import { z, ZodError } from 'zod';
 import { AppError, formatZodError } from '../error';
 
 // Define types for request validation schemas
-export type RequestSchemas<TParams, TQuery, TBody, TResponse> = {
+export type ResultAsyncRequestSchemas<TParams, TQuery, TBody, TResponse> = {
   params?: z.ZodType<TParams>;
   query?: z.ZodType<TQuery>;
   body?: z.ZodType<TBody>;
@@ -14,13 +14,13 @@ export type RequestSchemas<TParams, TQuery, TBody, TResponse> = {
 };
 
 // Define type for validation errors
-export type ErrorListItem = {
+export type ResultAsyncErrorListItem = {
   type: 'Params' | 'Body' | 'Query' | 'Response';
   errors: ZodError;
 };
 
 // Define callback type with validated request data
-export type RequestCallback<TParams, TQuery, TBody, TResponse> = (
+export type ResultAsyncRequestCallback<TParams, TQuery, TBody, TResponse> = (
   data: { params: TParams; query: TQuery; body: TBody },
   req: Request,
   res: Response,
@@ -28,12 +28,12 @@ export type RequestCallback<TParams, TQuery, TBody, TResponse> = (
 
 export const resultAsyncController =
   <TParams = unknown, TQuery = unknown, TBody = unknown, TResponse = unknown>(
-    schemas: RequestSchemas<TParams, TQuery, TBody, TResponse>,
-    cb: RequestCallback<TParams, TQuery, TBody, TResponse>,
+    schemas: ResultAsyncRequestSchemas<TParams, TQuery, TBody, TResponse>,
+    cb: ResultAsyncRequestCallback<TParams, TQuery, TBody, TResponse>,
     successStatusCode = 200,
   ): RequestHandler =>
   (req, res, next) => {
-    const errors: ErrorListItem[] = [];
+    const errors: ResultAsyncErrorListItem[] = [];
     const requestData = {
       params: {} as TParams,
       body: {} as TBody,

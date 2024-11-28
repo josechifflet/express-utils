@@ -5,6 +5,7 @@ export * from './generate-random-hex';
 export * from './get-device-id';
 export * from './is-https';
 export * from './passwords';
+export * from './result-async-controller';
 export * from './send-error';
 export * from './send-response';
 export * from './timing-safe-string-compare';
