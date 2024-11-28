@@ -101,7 +101,9 @@ export const resultAsyncController =
       })
       .then((result) => {
         if (result.isOk()) {
-          res.status(successStatusCode).json(result.value);
+          res
+            .status(successStatusCode)
+            .json({ data: result.value, status: 'success' });
         } else {
           next(result.error);
         }
