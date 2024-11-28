@@ -136,6 +136,7 @@ export const errorHandler = (config: ErrorHandlerConfig) => {
       const response = {
         status: 'error', // Indicates a server-side or application-level failure.
         message: error.message, // Provide the error message for client feedback.
+        extra: error.extra ?? undefined,
         ...(environment === 'development' && { stack: error.stack }), // Include stack trace only in development.
       };
       res.status(error.statusCode).json(response); // Send structured JSON response with appropriate HTTP status.
