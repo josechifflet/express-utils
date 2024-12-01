@@ -1,3 +1,5 @@
+import compression from 'compression';
+import cors from 'cors';
 import express, { Express, RequestHandler } from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
@@ -22,6 +24,7 @@ import xst from '../middlewares/xst';
 export interface ApiOptions {
   handlers: { path: string; handler: RequestHandler }[]; // Array of route handlers
   redis: Redis; // Redis instance for rate limiting
+  corsOptions: cors.CorsOptions; // CORS origin options
 
   extraMiddlewares?: RequestHandler[]; // Optional custom middlewares
   apiRateLimit?: number; // Optional rate limit for API requests
@@ -50,23 +53,23 @@ class Api {
     };
 
     // Configure the application settings and apply middleware
-    this.configureApp();
+    this.configureApp(options.corsOptions);
     this.applyMiddlewares(options.extraMiddlewares);
     this.applyHandlers(options.handlers, options.apiRateLimit);
     this.applyErrorHandlers();
   }
 
   // Configures basic settings and essential middleware for the application
-  private configureApp(): void {
+  private configureApp(corsOptions: cors.CorsOptions): void {
     if (this.trustProxy) this.app.enable('trust proxy'); // Trust proxy headers if enabled
-
-    // Log requests with Morgan in the specified format
-    this.app.use(morgan(this.morganFormat));
 
     // Use Helmet for security headers with customized options
     this.app.use(
       helmet({ frameguard: { action: 'deny' }, hidePoweredBy: false }),
     );
+
+    // Use CORS with specified options
+    this.app.use(cors(corsOptions));
 
     // Additional custom security and utility middlewares
     this.app.use(xRequestedWith()); // Add X-Requested-With header for CSRF protection
@@ -75,6 +78,10 @@ class Api {
     this.app.use(hpp()); // Protect against HTTP Parameter Pollution
     this.app.use(xst()); // Middleware for XST protection
     this.app.use(favicon()); // Serve a default favicon
+    this.app.use(compression()); // Node.js compression middleware.
+
+    // Log requests with Morgan in the specified format
+    this.app.use(morgan(this.morganFormat));
 
     // Logging middleware for successful requests
     this.app.use(successLogger);
