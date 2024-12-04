@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
 import { getReasonPhrase } from 'http-status-codes';
 import { nanoid } from 'nanoid';
-import { asError } from 'src/util';
 import { ZodError } from 'zod';
+
+import { asError } from '../util';
 
 /**
  * Configuration options for the error handler function.
