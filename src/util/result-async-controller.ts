@@ -79,7 +79,7 @@ export const resultAsyncController =
 
     // If there are validation errors, pass them to the next error handler
     if (requestErrors.length > 0) {
-      return next(new AppError('Bad request', 400, { errors: requestErrors }));
+      return next(new AppError('Bad request', 400, requestErrors));
     }
 
     // Run the callback with the validated data
@@ -99,13 +99,14 @@ export const resultAsyncController =
           return okAsync(response);
         }
       })
-      .then((result) => {
-        if (result.isOk()) {
+      .match(
+        // If there is no error, send the response
+        (value) =>
           res
             .status(successStatusCode)
-            .json({ data: result.value, status: 'success' });
-        } else {
-          next(result.error);
-        }
-      });
+            .json({ data: value, status: 'success' }),
+
+        // If there is an error, pass it to the next error handler
+        (error) => next(error),
+      );
   };
