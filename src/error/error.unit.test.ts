@@ -36,11 +36,11 @@ describe('AppError', () => {
     expect(appError.error).toBe(error);
   });
 
-  it('should set message to "Internal Server Error!" for 5xx status codes', () => {
+  it('should set message to "Test message" for 5xx status codes', () => {
     const error = new Error('Test error');
     const appError = new AppError('Test message', 500, error);
 
-    expect(appError.message).toBe('Internal Server Error!');
+    expect(appError.message).toBe('Test message');
   });
 });
 

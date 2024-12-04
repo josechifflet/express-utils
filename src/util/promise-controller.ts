@@ -1,7 +1,8 @@
 import { RequestHandler } from 'express';
 import { Request, Response } from 'express';
-import { AppError } from 'src/error';
 import { z, ZodError } from 'zod';
+
+import { AppError } from '../error';
 
 // Define types for request validation schemas
 export type RequestSchemas<TParams, TQuery, TBody, TResponse> = {

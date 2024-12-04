@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { AppError } from 'src/error';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 
+import { AppError } from '../error';
 import { promiseController, RequestSchemas } from './promise-controller';
 
 // Mock functions for request, response, and next
