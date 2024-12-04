@@ -59,5 +59,6 @@
     /* Default */
     "baseUrl": "./"
   },
-  "include": ["src", "eslint.config.mjs", "**/*.test.ts"]
+  "include": ["src", "eslint.config.mjs", "**/*.test.ts"],
+  "exclude": ["**/*.test.ts"]
 }
