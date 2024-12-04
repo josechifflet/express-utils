@@ -4,7 +4,6 @@ import { decodeJwt, importPKCS8, importSPKI, jwtVerify, SignJWT } from 'jose';
 import { z } from 'zod';
 
 import { AppError } from '../error';
-import { asError } from '../util/catch-unknown';
 
 /**
  * Signs a JWT with HS256 (symmetric algorithm) for session-based authentication.
@@ -122,7 +121,7 @@ export const verifyEdDSAJWT = async (
     // Verify and decode the token
     return jwtVerify(token, publicKeyEncoded, options);
   } catch (error) {
-    throw new AppError(asError(error).name, 401);
+    throw new AppError('Invalid JWT', 401, error);
   }
 };
 
@@ -166,7 +165,7 @@ export const validateJWTPayload = (jwtPayload: JWTPayload) => {
   // Validate the payload using Zod
   const validation = JWTPayloadSchema.safeParse(jwtPayload);
   if (!validation.success) {
-    throw new AppError('Invalid JWT payload', 401);
+    throw new AppError('Invalid JWT payload', 401, validation.error);
   }
 
   return validation.data;

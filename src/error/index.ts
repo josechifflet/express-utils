@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { getReasonPhrase } from 'http-status-codes';
 import { nanoid } from 'nanoid';
+import { asError } from 'src/util';
 import { ZodError } from 'zod';
 
 /**
@@ -36,8 +37,8 @@ export class AppError extends Error {
   // Custom error type to maintain compatibility with `http-errors` package or other similar conventions.
   public type: string;
 
-  // Error extra data to be included in the response.
-  public extra: Record<string, unknown> = {};
+  // Stack trace for debugging, only included in development mode.
+  public error: Error;
 
   /**
    * Constructor initializes an AppError instance with a message and status code.
@@ -47,12 +48,9 @@ export class AppError extends Error {
    * @param message - Human-readable message describing the error.
    * @param statusCode - HTTP status code to be sent in the response.
    */
-  constructor(
-    message: string,
-    statusCode: number,
-    extra?: Record<string, unknown>,
-  ) {
-    super(message); // Initialize the base Error class with the provided message.
+  constructor(message: string, statusCode: number, error?: Error | unknown) {
+    const safeError = asError(error || new Error());
+    super(message, safeError); // Initialize the base Error class with the provided message.
 
     this.id = nanoid(); // Generate a unique identifier for tracking the specific error instance.
     this.title = getReasonPhrase(statusCode); // Use HTTP status code phrases for consistency in error descriptions.
@@ -60,8 +58,8 @@ export class AppError extends Error {
     this.statusCode = statusCode;
     this.isOperational = true; // Marks the error as operational (not critical).
     this.type = 'operational.error';
-    if (extra) this.extra = extra; // Optionally include extra data in the error response.
-    Error.captureStackTrace(this, this.constructor); // Capture the error stack trace for logging.
+    this.error = safeError;
+    this.stack = safeError.stack;
   }
 }
 
@@ -92,21 +90,25 @@ export const formatZodError = (error: ZodError): string => {
 export const defaultHandleOperationalErrors = (err: Error): AppError => {
   // Handle JSON parsing errors with a 400 Bad Request response.
   if (err instanceof SyntaxError) {
-    return new AppError('Invalid JSON! Please provide a valid one.', 400);
+    return new AppError('Invalid JSON! Please provide a valid one.', 400, err);
   }
 
   // Handle payload too large errors, commonly caused by oversized client requests.
   if ('type' in err && err.type === 'entity.too.large') {
-    return new AppError('Request too large! Please reduce your payload.', 413);
+    return new AppError(
+      'Request too large! Please reduce your payload.',
+      413,
+      err,
+    );
   }
 
   // Convert Zod schema validation errors to a structured AppError with field-specific feedback.
   if (err instanceof ZodError) {
-    return new AppError(formatZodError(err), 400);
+    return new AppError(formatZodError(err), 400, err);
   }
 
   console.error(err); // Log unknown errors for troubleshooting during development.
-  return new AppError('Internal server error!', 500); // Default to 500 Internal Server Error for unrecognized errors.
+  return new AppError('Internal server error!', 500, err);
 };
 
 /**
@@ -136,8 +138,6 @@ export const errorHandler = (config: ErrorHandlerConfig) => {
       const response = {
         status: 'error', // Indicates a server-side or application-level failure.
         message: error.message, // Provide the error message for client feedback.
-        ...(environment === 'development' &&
-          error.extra && { extra: error.extra }), // Optionally include extra data in the response.
         ...(environment === 'development' && { stack: error.stack }), // Include stack trace only in development.
       };
       res.status(error.statusCode).json(response); // Send structured JSON response with appropriate HTTP status.
@@ -163,6 +163,7 @@ export const errorHandler = (config: ErrorHandlerConfig) => {
     const unknownError = new AppError(
       'Unknown error! Please try again later.',
       500,
+      err,
     );
     console.error('Unknown error:', err); // Log unknown errors for investigation.
     sendErrorResponse(unknownError);

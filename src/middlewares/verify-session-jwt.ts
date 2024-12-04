@@ -61,13 +61,13 @@ const verifySessionJwt =
        * allowing custom handling of expiration events (e.g., logging). If no callback is provided, a 401 Unauthorized
        * error is thrown, indicating that re-authentication is required.
        *
-       * @param _req - The Express request object, which contains client-specific data.
-       * @param _err - The error object representing the expiration error, for use in custom handling.
+       * @param req - The Express request object, which contains client-specific data.
+       * @param err - The error object representing the expiration error, for use in custom handling.
        */
-      onExpired: async (_req: Request, _err: unknown) => {
+      onExpired: async (req: Request, err: unknown) => {
         if (onExpired) {
           // Execute the custom expiration handler, if provided.
-          await onExpired(_req, _err);
+          await onExpired(req, err);
         } else {
           // If no custom handler is provided, respond with a 401 Unauthorized error.
           throw new AppError(
