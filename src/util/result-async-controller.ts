@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
 import { Request, Response } from 'express';
-import { errAsync, okAsync, ResultAsync } from 'neverthrow';
+import { Result, ResultAsync } from 'neverthrow';
 import { z, ZodFormattedError } from 'zod';
 
-import { AppError, formatZodError } from '../error';
+import { AppError } from '../error';
 
 // Define types for request validation schemas
 export type ResultAsyncRequestSchemas<TParams, TQuery, TBody, TResponse> = {
@@ -32,7 +32,7 @@ export const resultAsyncController =
     cb: ResultAsyncRequestCallback<TParams, TQuery, TBody, TResponse>,
     successStatusCode = 200,
   ): RequestHandler =>
-  (req, res, next) => {
+  async (req, res, next) => {
     const requestErrors: ResultAsyncErrorListItem<TParams, TQuery, TBody>[] =
       [];
     const requestData = {
@@ -82,31 +82,37 @@ export const resultAsyncController =
       return next(new AppError('Bad request', 400, requestErrors));
     }
 
-    // Run the callback with the validated data
-    cb(requestData, req, res)
-      .andThen((response) => {
-        // Validate response if schema is provided
-        if (schemas.response) {
-          const parsedResponse = schemas.response.safeParse(response);
-          if (parsedResponse.success) {
-            return okAsync(parsedResponse.data);
-          } else {
-            return errAsync(
-              new AppError(formatZodError(parsedResponse.error), 500),
-            );
-          }
-        } else {
-          return okAsync(response);
-        }
-      })
-      .match(
+    // Run the callback with the validated data using ResultAsync
+    try {
+      const result: Result<TResponse, AppError> = await cb(
+        requestData,
+        req,
+        res,
+      );
+
+      result.match(
         // If there is no error, send the response
-        (value) =>
+        (value) => {
+          // If the response schema is provided, validate the response
+          if (schemas.response) {
+            const parsedResponse = schemas.response.safeParse(value);
+            if (!parsedResponse.success) {
+              return next(
+                new AppError('Bad response', 500, parsedResponse.error),
+              );
+            }
+          }
+
+          // Send the response
           res
             .status(successStatusCode)
-            .json({ data: value, status: 'success' }),
+            .json({ data: value, status: 'success' });
+        },
 
         // If there is an error, pass it to the next error handler
-        (error) => next(error),
+        (error: AppError) => next(error),
       );
+    } catch (error) {
+      next(new AppError('Unknown error! Please try again later!', 500, error));
+    }
   };

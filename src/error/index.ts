@@ -50,8 +50,11 @@ export class AppError extends Error {
    * @param statusCode - HTTP status code to be sent in the response.
    */
   constructor(message: string, statusCode: number, error?: Error | unknown) {
+    const verifiedMessage = `${statusCode}`.startsWith('5')
+      ? 'Internal Server Error!'
+      : message;
     const safeError = asError(error || new Error());
-    super(message, safeError); // Initialize the base Error class with the provided message.
+    super(verifiedMessage, safeError); // Initialize the base Error class with the provided message.
 
     this.id = nanoid(); // Generate a unique identifier for tracking the specific error instance.
     this.title = getReasonPhrase(statusCode); // Use HTTP status code phrases for consistency in error descriptions.
@@ -109,7 +112,7 @@ export const defaultHandleOperationalErrors = (err: Error): AppError => {
   }
 
   console.error(err); // Log unknown errors for troubleshooting during development.
-  return new AppError('Internal server error!', 500, err);
+  return new AppError('Internal Server Error!', 500, err);
 };
 
 /**

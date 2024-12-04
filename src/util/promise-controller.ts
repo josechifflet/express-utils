@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import { Request, Response } from 'express';
+import { AppError } from 'src/error';
 import { z, ZodError } from 'zod';
 
 // Define types for request validation schemas
@@ -23,14 +24,14 @@ export type RequestCallback<TParams, TQuery, TBody, TResponse> = (
   res: Response,
 ) => Promise<TResponse> | TResponse;
 
-export const typedRequest =
+export const promiseController =
   <TParams = unknown, TQuery = unknown, TBody = unknown, TResponse = unknown>(
     schemas: RequestSchemas<TParams, TQuery, TBody, TResponse>,
     cb: RequestCallback<TParams, TQuery, TBody, TResponse>,
     successStatusCode = 200,
   ): RequestHandler =>
-  (req, res, next) => {
-    const errors: ErrorListItem[] = [];
+  async (req, res, next) => {
+    const requestErrors: ErrorListItem[] = [];
     const requestData = {
       params: {} as TParams,
       body: {} as TBody,
@@ -43,7 +44,7 @@ export const typedRequest =
       if (parsedParams.success) {
         requestData.params = parsedParams.data;
       } else {
-        errors.push({ type: 'Params', errors: parsedParams.error });
+        requestErrors.push({ type: 'Params', errors: parsedParams.error });
       }
     }
 
@@ -53,7 +54,7 @@ export const typedRequest =
       if (parsedBody.success) {
         requestData.body = parsedBody.data;
       } else {
-        errors.push({ type: 'Body', errors: parsedBody.error });
+        requestErrors.push({ type: 'Body', errors: parsedBody.error });
       }
     }
 
@@ -63,31 +64,30 @@ export const typedRequest =
       if (parsedQuery.success) {
         requestData.query = parsedQuery.data;
       } else {
-        errors.push({ type: 'Query', errors: parsedQuery.error });
+        requestErrors.push({ type: 'Query', errors: parsedQuery.error });
       }
     }
 
     // If there are validation errors, pass them to the next error handler
-    if (errors.length > 0) {
-      return next(errors);
+    if (requestErrors.length > 0) {
+      return next(new AppError('Bad request', 400, requestErrors));
     }
 
-    // Run the callback with the validated data
-    Promise.resolve(cb(requestData, req, res))
-      .then((response: TResponse) => {
-        // Validate response if schema is provided
-        if (schemas.response) {
-          const parsedResponse = schemas.response.safeParse(response);
-          if (parsedResponse.success) {
-            res.status(successStatusCode).json(parsedResponse.data);
-          } else {
-            errors.push({ type: 'Response', errors: parsedResponse.error });
-            next(errors);
-          }
-        } else {
-          // Send response if no response schema is defined
-          res.status(successStatusCode).json(response);
+    // Run the callback with the validated data using await promise
+    try {
+      const result = await cb(requestData, req, res);
+
+      // If the response schema is provided, validate the response
+      if (schemas.response) {
+        const parsedResponse = schemas.response.safeParse(result);
+        if (!parsedResponse.success) {
+          return next(new AppError('Bad response', 500, parsedResponse.error));
         }
-      })
-      .catch(next);
+      }
+
+      // Send the response
+      res.status(successStatusCode).json(result);
+    } catch (error) {
+      next(new AppError('Unknown error! Please try again later!', 500, error));
+    }
   };

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ZodError } from 'zod';
 
 import {
@@ -9,12 +9,18 @@ import {
 } from './index';
 
 // Mock functions for request, response, and next
-const mockRequest = {} as Request;
-const mockResponse = {
-  status: vi.fn().mockReturnThis(),
-  json: vi.fn().mockReturnThis(),
-} as unknown as Response;
-const mockNext = vi.fn() as NextFunction;
+let mockRequest: Request;
+let mockResponse: Response;
+let mockNext: NextFunction;
+
+beforeEach(() => {
+  mockRequest = {} as Request;
+  mockResponse = {
+    status: vi.fn().mockReturnThis(),
+    json: vi.fn().mockReturnThis(),
+  } as unknown as Response;
+  mockNext = vi.fn() as NextFunction;
+});
 
 // Test suite for AppError class
 describe('AppError', () => {
@@ -28,6 +34,13 @@ describe('AppError', () => {
     expect(appError.status).toBe('fail');
     expect(appError.isOperational).toBe(true);
     expect(appError.error).toBe(error);
+  });
+
+  it('should set message to "Internal Server Error!" for 5xx status codes', () => {
+    const error = new Error('Test error');
+    const appError = new AppError('Test message', 500, error);
+
+    expect(appError.message).toBe('Internal Server Error!');
   });
 });
 
@@ -70,7 +83,7 @@ describe('defaultHandleOperationalErrors', () => {
 
     expect(appError).toBeInstanceOf(AppError);
     expect(appError.statusCode).toBe(500);
-    expect(appError.message).toBe('Internal server error!');
+    expect(appError.message).toBe('Internal Server Error!');
   });
 });
 
@@ -99,7 +112,7 @@ describe('errorHandler', () => {
     expect(mockResponse.status).toHaveBeenCalledWith(500);
     expect(mockResponse.json).toHaveBeenCalledWith({
       status: 'error',
-      message: 'Internal server error!',
+      message: 'Internal Server Error!',
     });
   });
 
@@ -110,5 +123,27 @@ describe('errorHandler', () => {
     handler(unknownError, mockRequest, mockResponse, mockNext);
 
     expect(mockNext).toHaveBeenCalled();
+  });
+
+  it('should include stack trace in development mode', () => {
+    const appError = new AppError('Test message', 400, new Error('Test error'));
+    const handler = errorHandler({ environment: 'development' });
+
+    handler(appError, mockRequest, mockResponse, mockNext);
+
+    expect(mockResponse.json).toHaveBeenCalledWith(
+      expect.objectContaining({ stack: appError.stack }),
+    );
+  });
+
+  it('should exclude stack trace in production mode', () => {
+    const appError = new AppError('Test message', 400, new Error('Test error'));
+    const handler = errorHandler({ environment: 'production' });
+
+    handler(appError, mockRequest, mockResponse, mockNext);
+
+    expect(mockResponse.json).not.toHaveBeenCalledWith(
+      expect.objectContaining({ stack: appError.stack }),
+    );
   });
 });
