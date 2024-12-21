@@ -1,11 +1,41 @@
 {
   "name": "@mark01/express-utils",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "npm package that contains utilities for express.js",
   "type": "module",
-  "main": "lib/index.js",
-  "module": "lib/index.mjs",
-  "types": "lib/index.d.ts",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    },
+    "./api": {
+      "types": "./lib/api/index.d.ts",
+      "import": "./lib/api/index.js"
+    },
+    "./error": {
+      "types": "./lib/error/index.d.ts",
+      "import": "./lib/error/index.js"
+    },
+    "./core": {
+      "types": "./lib/core/index.d.ts",
+      "import": "./lib/core/index.js"
+    },
+    "./redis": {
+      "types": "./lib/redis/index.d.ts",
+      "import": "./lib/redis/index.js"
+    },
+    "./middlewares": {
+      "types": "./lib/middlewares/index.d.ts",
+      "import": "./lib/middlewares/index.js"
+    },
+    "./util": {
+      "types": "./lib/util/index.d.ts",
+      "import": "./lib/util/index.js"
+    }
+  },
   "files": [
     "lib/**/*"
   ],
@@ -20,7 +50,7 @@
     "url": "https://github.com/josechifflet"
   },
   "engines": {
-    "node": ">=22.0"
+    "node": ">=20.0"
   },
   "keywords": [
     "typescript",
