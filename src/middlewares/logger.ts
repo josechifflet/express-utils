@@ -88,8 +88,8 @@ const options = (filename: string): LoggerOptions => ({
  * non-error response. Logs are saved in a traffic-specific file (`traffic.log`), aiding in the
  * analysis of normal application behavior and user interactions.
  */
-export const successLogger = expressWinston.logger(options('traffic.log'));
-
+const successLogger = expressWinston.logger(options('traffic.log'));
+export { successLogger };
 /**
  * Middleware for logging error responses.
  *
@@ -97,4 +97,5 @@ export const successLogger = expressWinston.logger(options('traffic.log'));
  * in an error-specific file (`errors.log`). By separating error logs, this allows for focused
  * troubleshooting and monitoring of issues without cluttering general traffic logs.
  */
-export const errorLogger = expressWinston.errorLogger(options('errors.log'));
+const errorLogger = expressWinston.errorLogger(options('errors.log'));
+export { errorLogger };

@@ -24,7 +24,7 @@ import extractHeader from '../util/extract-header';
  * @param onTokenValidated - Optional callback function, called if the token is valid. This can be used for additional checks.
  * @returns A middleware function that performs JWT validation.
  */
-const hasJWT =
+export const hasJWT =
   (
     header: string,
     publicKey: string,

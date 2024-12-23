@@ -23,7 +23,7 @@ import { AppError } from '../error';
  *
  * @returns Middleware function that verifies the presence of `X-Requested-With` header in the request.
  */
-const xRequestedWith =
+export const xRequestedWith =
   () => (req: Request, _: Response, next: NextFunction) => {
     // Check for the presence of the `X-Requested-With` header, typically set by AJAX requests.
     // - `X-Requested-With` is used as a "custom" header, which will trigger a preflight request in CORS policy.
