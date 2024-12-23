@@ -18,7 +18,7 @@ import { AppError } from '../error';
  *
  * @returns An Express middleware function to handle JWT verification for incoming requests.
  */
-const verifySessionJwt =
+export const verifySessionJwt =
   (
     secret: string,
     audience: string,

@@ -12,7 +12,7 @@ import type { Request } from 'express';
  * @param request - The Express request object representing the incoming HTTP request.
  * @returns `true` if the connection is secure (HTTPS), otherwise `false`.
  */
-const isHTTPS = (request: Request): boolean => {
+export const isHTTPS = (request: Request): boolean => {
   // Check if the `req.secure` property is true, indicating an HTTPS connection in Express.
   // - This property is set by Express if the request was made over HTTPS.
   if (request.secure) {

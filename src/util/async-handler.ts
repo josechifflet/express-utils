@@ -16,7 +16,7 @@ import type { NextFunction, Request, RequestHandler, Response } from 'express';
  * @param asyncRouteHandler - An Express asynchronous request handler (async function).
  * @returns A new function that catches and forwards errors to the next middleware.
  */
-const asyncHandler =
+export const asyncHandler =
   (asyncRouteHandler: RequestHandler) =>
   (req: Request, res: Response, next: NextFunction) =>
     // Use Promise.resolve to handle both resolved and rejected promises from the async function.

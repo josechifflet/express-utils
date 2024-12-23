@@ -19,7 +19,7 @@ import { RedisStore } from 'rate-limit-redis';
  * @param delayAfter - Maximum allowed requests before throttling begins.
  * @returns Configured instance of `express-slow-down` middleware for global use.
  */
-const slowDown = (redis: Redis, delayAfter: number) => {
+export const slowDown = (redis: Redis, delayAfter: number) => {
   return expressSlowDown({
     /**
      * RedisStore setup for storing request counts and slow-down limits:

@@ -21,7 +21,7 @@ import xRequestedWith from '../middlewares/x-requested-with';
 import xst from '../middlewares/xst';
 
 // Interface for configuration options passed to the Api class
-export interface ApiOptions {
+interface ApiOptions {
   handlers: { path: string; handler: RequestHandler }[]; // Array of route handlers
   redis: Redis; // Redis instance for rate limiting
   corsOptions: cors.CorsOptions; // CORS origin options
@@ -123,4 +123,4 @@ class Api {
   }
 }
 
-export default Api;
+export { Api, type ApiOptions };

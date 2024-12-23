@@ -14,7 +14,7 @@ import { AppError } from '../error';
  *
  * @returns A middleware function that checks the `Accept` header and calls `next` with an error if unsupported.
  */
-const accept = () => (req: Request, _: Response, next: NextFunction) => {
+export const accept = () => (req: Request, _: Response, next: NextFunction) => {
   const { accept } = req.headers;
 
   // Verify the `Accept` header in the request. If the header is missing or does not contain

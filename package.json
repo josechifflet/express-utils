@@ -1,11 +1,11 @@
 {
   "name": "@mark01/express-utils",
-  "version": "1.0.27",
+  "version": "1.0.36",
   "description": "npm package that contains utilities for express.js",
   "type": "module",
-  "main": "lib/index.js",
-  "module": "lib/index.mjs",
-  "types": "lib/index.d.ts",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
@@ -20,7 +20,7 @@
     "url": "https://github.com/josechifflet"
   },
   "engines": {
-    "node": ">=22.0"
+    "node": ">=20.0"
   },
   "keywords": [
     "typescript",
