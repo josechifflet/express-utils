@@ -17,7 +17,7 @@ import { AppError } from '../error';
  *
  * @returns A middleware function that restricts HTTP methods to prevent XST attacks.
  */
-const xst = () => (req: Request, _: Response, next: NextFunction) => {
+export const xst = () => (req: Request, _: Response, next: NextFunction) => {
   // Define the list of allowed HTTP methods to mitigate risks of XST attacks.
   // - Limiting methods to this set restricts unsupported methods like TRACE that are susceptible to exploitation.
   // - Only these methods are permitted for API routes, reducing the attack surface.

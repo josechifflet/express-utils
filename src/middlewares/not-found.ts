@@ -14,12 +14,13 @@ import { AppError } from '../error';
  *
  * @returns A middleware function that creates a `404 Not Found` error.
  */
-const notFound = () => (req: Request, _: Response, next: NextFunction) => {
-  // Forward a new `AppError` instance to Express's error-handling pipeline.
-  // - `req.originalUrl` contains the full path of the requested URL, making the error message
-  //   more informative by specifying the exact route that could not be found.
-  // - `404` is the standard HTTP status code for a resource that could not be located.
-  next(new AppError(`Cannot find '${req.originalUrl}' on this server!`, 404));
-};
+export const notFound =
+  () => (req: Request, _: Response, next: NextFunction) => {
+    // Forward a new `AppError` instance to Express's error-handling pipeline.
+    // - `req.originalUrl` contains the full path of the requested URL, making the error message
+    //   more informative by specifying the exact route that could not be found.
+    // - `404` is the standard HTTP status code for a resource that could not be located.
+    next(new AppError(`Cannot find '${req.originalUrl}' on this server!`, 404));
+  };
 
 export default notFound;

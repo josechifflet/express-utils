@@ -18,7 +18,7 @@ import { AppError } from '../error';
  * @param next - Express.js `next` function to pass control to the next middleware.
  * @returns A customized instance of `express.json`, tailored for selective JSON parsing.
  */
-const bodyParser = (req: Request, res: Response, next: NextFunction) => {
+export const bodyParser = (req: Request, res: Response, next: NextFunction) => {
   const { ['content-type']: type, ['content-length']: length } = req.headers;
 
   // Check if the request `Content-Type` header is set to `application/json`.

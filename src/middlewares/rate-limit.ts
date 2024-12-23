@@ -23,7 +23,7 @@ import { AppError } from '../error';
  * @param minutes - The duration, in minutes, for which the rate limit window is active. Defaults to 15 minutes.
  * @returns A configured rate limiter middleware for use in Express routes.
  */
-const rateLimit = (
+export const rateLimit = (
   redis: Redis,
   max: number,
   prefix = 'common',
