@@ -1,8 +1,8 @@
 // API
-export { Api, type ApiOptions } from './api/index';
+export { Api, type ApiOptions } from './api';
 
 // Server
-export { type ExpressAppStarterOptions, Server } from './server/index';
+export { type ExpressAppStarterOptions, Server } from './server';
 
 // Errors
 export {
@@ -10,10 +10,10 @@ export {
   errorHandler,
   type ErrorHandlerConfig,
   formatZodError,
-} from './error/index';
+} from './error';
 
 // Redis
-export { Redis } from './redis/index';
+export { Redis } from './redis';
 
 // Middlewares
 export { accept } from './middlewares/accept';

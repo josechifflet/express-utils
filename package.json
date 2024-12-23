@@ -1,11 +1,17 @@
 {
   "name": "@mark01/express-utils",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "npm package that contains utilities for express.js",
   "type": "module",
   "main": "./lib/index.js",
-  "module": "./lib/index.mjs",
+  "module": "./lib/index.cjs",
   "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.cjs",
+      "require": "./lib/index.js"
+    }
+  },
   "files": [
     "lib/**/*"
   ],
