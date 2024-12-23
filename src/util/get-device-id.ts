@@ -12,7 +12,7 @@ import { getClientIp } from 'request-ip';
  * @param request - Express request object containing client information.
  * @returns An object containing the user's device information and IP address.
  */
-const getDeviceID = (request: Request) => {
+export const getDeviceID = (request: Request) => {
   // Retrieve the user agent string from the request headers.
   // - If the `user-agent` header is not available, default to an empty string.
   const userAgent = request.headers['user-agent'] || '';

@@ -14,7 +14,7 @@ import { z } from 'zod';
  * @param headerName - The name of the header to retrieve (e.g., "Authorization").
  * @returns The validated header value as a string, or `undefined` if the header is absent or invalid.
  */
-const extractHeader = (
+export const extractHeader = (
   request: Request,
   headerName: string,
 ): string | undefined => {

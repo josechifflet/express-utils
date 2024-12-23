@@ -12,7 +12,7 @@ import { timingSafeEqual } from 'node:crypto';
  * @param secondString - The second string to compare.
  * @returns `true` if the strings are equal, otherwise `false`.
  */
-const timingSafeStringCompare = (
+export const timingSafeStringCompare = (
   firstString: string,
   secondString: string,
 ): boolean => {

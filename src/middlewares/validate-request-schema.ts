@@ -12,7 +12,7 @@ import { AnyZodObject } from 'zod';
  * @param validationSchema - A Zod schema object used to validate the request data.
  * @returns An Express middleware function that validates the request.
  */
-const validateRequestSchema =
+export const validateRequestSchema =
   (validationSchema: AnyZodObject) =>
   (request: Request, _response: Response, next: NextFunction) => {
     try {

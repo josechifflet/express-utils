@@ -15,19 +15,20 @@ import type { NextFunction, Request, Response } from 'express';
  *
  * @returns A middleware function to intercept `favicon.ico` requests and respond with a `204` status.
  */
-const favicon = () => (req: Request, res: Response, next: NextFunction) => {
-  // Check if the request URL includes 'favicon.ico'.
-  // - Browsers request this file by default, and the API does not serve a favicon, so these requests should be ignored.
-  // - `req.originalUrl` captures the original path requested by the client, allowing for easy identification of favicon requests.
-  if (req.originalUrl.includes('favicon.ico')) {
-    // Respond with a 204 No Content status to indicate that the request is acknowledged but there is no data to serve.
-    // - The `end()` method terminates the response process without sending any content, fulfilling the request.
-    res.status(204).end();
-    return; // Exit early to prevent further middleware processing for this request.
-  }
+export const favicon =
+  () => (req: Request, res: Response, next: NextFunction) => {
+    // Check if the request URL includes 'favicon.ico'.
+    // - Browsers request this file by default, and the API does not serve a favicon, so these requests should be ignored.
+    // - `req.originalUrl` captures the original path requested by the client, allowing for easy identification of favicon requests.
+    if (req.originalUrl.includes('favicon.ico')) {
+      // Respond with a 204 No Content status to indicate that the request is acknowledged but there is no data to serve.
+      // - The `end()` method terminates the response process without sending any content, fulfilling the request.
+      res.status(204).end();
+      return; // Exit early to prevent further middleware processing for this request.
+    }
 
-  // If the request is not for `favicon.ico`, proceed to the next middleware or route handler.
-  next();
-};
+    // If the request is not for `favicon.ico`, proceed to the next middleware or route handler.
+    next();
+  };
 
 export default favicon;

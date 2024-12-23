@@ -11,7 +11,7 @@ import { promisify } from 'node:util';
  * @param byteSize - The number of bytes to generate. Defaults to 64 bytes.
  * @returns A promise that resolves to a hexadecimal string representing the random bytes.
  */
-const generateRandomHex = async (byteSize = 64): Promise<string> => {
+export const generateRandomHex = async (byteSize = 64): Promise<string> => {
   // Promisify `randomBytes` to enable async/await and generate the specified number of random bytes.
   const randomBuffer = await promisify(generateBytes)(byteSize);
 
