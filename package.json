@@ -1,6 +1,6 @@
 {
   "name": "@mark01/express-utils",
-  "version": "1.0.37",
+  "version": "1.0.38",
   "description": "npm package that contains utilities for express.js",
   "type": "module",
   "main": "./lib/index.js",
@@ -20,7 +20,7 @@
     "url": "https://github.com/josechifflet"
   },
   "engines": {
-    "node": ">=20.0"
+    "node": ">=22.0"
   },
   "keywords": [
     "typescript",

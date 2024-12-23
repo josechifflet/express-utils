@@ -1,7 +1,7 @@
 import { getReasonPhrase } from 'http-status-codes';
 import { nanoid } from 'nanoid';
 
-import { asError } from '../util';
+import { asError } from '../util/catch-unknown';
 
 /**
  * Custom error class designed to handle operational errors in a JSON:API-compliant format.
