@@ -123,4 +123,4 @@ class Server {
   }
 }
 
-export default Server;
+export { Server };

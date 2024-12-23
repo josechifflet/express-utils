@@ -123,4 +123,4 @@ class Api {
   }
 }
 
-export default Api;
+export { Api };

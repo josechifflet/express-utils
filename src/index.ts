@@ -1,8 +1,8 @@
 // API
-export { default as Api, type ApiOptions } from './api';
+export { Api, type ApiOptions } from './api';
 
 // Server
-export { type ExpressAppStarterOptions, default as Server } from './server';
+export { type ExpressAppStarterOptions, Server } from './server';
 
 // Errors
 export type { ErrorHandlerConfig } from './error';
@@ -12,7 +12,7 @@ export { AppError, errorHandler, formatZodError } from './error';
 export * from './core';
 
 // Redis
-export { default as Redis } from './redis';
+export { Redis } from './redis';
 
 // Middlewares
 export * from './middlewares';

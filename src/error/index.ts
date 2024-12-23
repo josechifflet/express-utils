@@ -13,8 +13,6 @@ export interface ErrorHandlerConfig {
   handleOperationalErrors?: (err: Error) => AppError;
 }
 
-export { AppError };
-
 /**
  * Formats errors returned by Zod schema validation to extract meaningful feedback for the client.
  * - Returns the specific path and message of the first issue for clarity.
@@ -123,3 +121,5 @@ export const errorHandler = (config: ErrorHandlerConfig) => {
     next(); // Continue to the next middleware, if any (usually not needed after sending a response).
   };
 };
+
+export { AppError };
