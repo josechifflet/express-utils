@@ -37,3 +37,27 @@ export { hashPassword, verifyPassword } from './util/passwords';
 export { promiseController } from './util/promise-controller';
 export { resultAsyncController } from './util/result-async-controller';
 export { timingSafeStringCompare } from './util/timing-safe-string-compare';
+
+// RFC 6238: Time-Based One-Time Password (TOTP)
+export {
+  generateDefaultTOTP,
+  generateOwnOTP,
+  generateTOTP,
+  type OTPParams,
+  validateDefaultTOTP,
+  validateTOTP,
+  verifyOwnTOTP,
+} from './core/rfc6238';
+
+// RFC 7519: JSON Web Token (JWT)
+export {
+  decodeJWTPayload,
+  extractJWTFromAuthHeader,
+  signEdDSAJWT,
+  signHS256JWT,
+  validateJWTPayload,
+  verifyEdDSAJWT,
+} from './core/rfc7519';
+
+// RFC 7617: Basic Authentication
+export { createBasicAuth, parseBasicAuth } from './core/rfc7617';
